@@ -7,8 +7,8 @@ FROM debian:jessie
 MAINTAINER Sebastian Tschan <mail@blueimp.net>
 
 # Install the base requirements to run and debug webdriver implementations:
-RUN DEBIAN_FRONTEND=noninteractive \
-  apt-get update \
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get install --no-install-recommends --no-install-suggests -y \
     xvfb \
