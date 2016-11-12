@@ -12,7 +12,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get dist-upgrade -y \
   && apt-get install --no-install-recommends --no-install-suggests -y \
     xvfb \
-    x11-utils \
+    xauth \
     ca-certificates \
     x11vnc \
     fluxbox \
@@ -40,9 +40,6 @@ RUN export TINI_VERSION=v0.10.0 && curl -sL \
   && rm -rf /root/.gnupg \
   && rm /sbin/tini.asc
 
-# Avoid error messages on Xvfb startup despite using the -nolisten tcp option:
-RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
-
 # Add webdriver user+group as a workaround for
 # https://github.com/boot2docker/boot2docker/issues/581
 RUN useradd -u 1000 -m -U webdriver
@@ -50,14 +47,15 @@ RUN useradd -u 1000 -m -U webdriver
 WORKDIR /home/webdriver
 
 COPY entrypoint.sh /usr/local/bin/entrypoint
+COPY vnc-start.sh /usr/local/bin/vnc-start
 
 # Configure Xvfb via environment variables:
-ENV SCREEN_WIDTH 1360
-ENV SCREEN_HEIGHT 1020
+ENV SCREEN_WIDTH 1440
+ENV SCREEN_HEIGHT 900
 ENV SCREEN_DEPTH 24
-ENV DISPLAY :99.0
+ENV DISPLAY :60
 
-ENTRYPOINT ["tini", "-g", "--", "entrypoint"]
+ENTRYPOINT ["entrypoint"]
 
 # Expose the default webdriver port:
 EXPOSE 4444

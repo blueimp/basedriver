@@ -1,30 +1,20 @@
 #!/bin/sh
 
-# Start Xvfb in a background process:
-Xvfb "$DISPLAY" -screen 0 "$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH" \
-  -ac +extension RANDR -nolisten tcp &
-
-printf 'Waiting for Xvfb to start ... '
-TIMEOUT=10
-while ! xdpyinfo -display "$DISPLAY" >/dev/null 2>&1; do
-  TIMEOUT=$((TIMEOUT-1))
-  if [ $TIMEOUT -lt 0 ]; then
-    echo timeout
-    exit 1
-  fi
-  sleep 0.5
-done
-echo 'done'
-
 if [ "$VNC_ENABLED" = true ]; then
-  # Disable fbsetbg and start fluxbox in a background process:
-  mkdir -p ~/.fluxbox && echo 'background: unset' >> ~/.fluxbox/overlay
-  fluxbox -display "$DISPLAY" &
-
-  # Start VNC in a background process:
-  x11vnc -display "$DISPLAY" -forever -shared -rfbport "${VNC_PORT:-5900}" \
-    -passwd "${VNC_PASSWORD:-secret}" &
+  set -- vnc-start "$@"
 fi
 
-# Start the webdriver implementation:
-exec "$@"
+if [ "$EXPOSE_X11" = true ]; then
+  set -- --listen-tcp "$@"
+fi
+
+# 6000+SERVERNUM is the TCP port Xvfb is listening on:
+SERVERNUM=$(echo "$DISPLAY" | sed 's/:\([0-9][0-9]*\).*/\1/')
+
+# Options passed directly to the Xvfb server:
+# -ac disables host-based access control mechanisms
+# −screen NUM WxHxD creates the screen and sets its width, height, and depth
+SERVERARGS="-ac -screen 0 ${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_DEPTH}"
+
+exec tini -g -- \
+  xvfb-run --server-num "$SERVERNUM" --server-args "$SERVERARGS" "$@"
