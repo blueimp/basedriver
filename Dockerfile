@@ -2,7 +2,7 @@
 # Base Webdriver Dockerfile
 #
 
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER Sebastian Tschan <mail@blueimp.net>
 
@@ -28,7 +28,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     /var/tmp/*
 
 # Add tini, a tiny but valid init system for containers:
-RUN export TINI_VERSION=v0.10.0 && curl -sL \
+RUN apt-get update \
+  && apt-get install --no-install-recommends --no-install-suggests -y \
+    gpg \
+    dirmngr \
+  && export TINI_VERSION=v0.14.0 && curl -sL \
   https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini \
   > /sbin/tini && chmod +x /sbin/tini \
   && curl -sL \
@@ -38,7 +42,13 @@ RUN export TINI_VERSION=v0.10.0 && curl -sL \
     595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
   && gpg --verify /sbin/tini.asc \
   && rm -rf /root/.gnupg \
-  && rm /sbin/tini.asc
+  && rm /sbin/tini.asc \
+  && apt-get autoremove --purge -y \
+    gpg \
+    dirmngr
+
+# Patch xvfb-run to support TCP port listening (disabled by default in X:
+RUN sed -i 's/LISTENTCP=""/LISTENTCP="-listen tcp"/' /usr/bin/xvfb-run
 
 # Add webdriver user+group as a workaround for
 # https://github.com/boot2docker/boot2docker/issues/581
