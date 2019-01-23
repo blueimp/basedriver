@@ -38,7 +38,7 @@ RUN apt-get update \
   && curl -sL \
   https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc \
   > /sbin/tini.asc \
-  && gpg --keyserver pool.sks-keyservers.net --recv-keys \
+  && gpg --no-tty --keyserver pool.sks-keyservers.net --recv-keys \
     595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
   && gpg --verify /sbin/tini.asc \
   && rm -rf /root/.gnupg \
