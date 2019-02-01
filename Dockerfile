@@ -28,8 +28,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # Patch xvfb-run to support TCP port listening (disabled by default in X:
 RUN sed -i 's/LISTENTCP=""/LISTENTCP="-listen tcp"/' /usr/bin/xvfb-run
 
-# Add webdriver user+group as a workaround for
-# https://github.com/boot2docker/boot2docker/issues/581
+# Avoid permission issues with host mounts by assigning a user/group with
+# uid/gid 1000 (usually the ID of the first user account on GNU/Linux):
 RUN useradd -u 1000 -m -U webdriver
 
 WORKDIR /home/webdriver
