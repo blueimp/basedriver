@@ -25,7 +25,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     /var/lib/apt/lists/* \
     /var/tmp/*
 
-# Patch xvfb-run to support TCP port listening (disabled by default in X:
+# Patch xvfb-run to support TCP port listening (disabled by default):
 RUN sed -i 's/LISTENTCP=""/LISTENTCP="-listen tcp"/' /usr/bin/xvfb-run
 
 # Avoid permission issues with host mounts by assigning a user/group with
