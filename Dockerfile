@@ -4,8 +4,6 @@
 
 FROM debian:stretch
 
-MAINTAINER Sebastian Tschan <mail@blueimp.net>
-
 # Install the base requirements to run and debug webdriver implementations:
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
