@@ -44,6 +44,3 @@ ENV SCREEN_DEPTH 24
 ENV DISPLAY :60
 
 ENTRYPOINT ["entrypoint"]
-
-# Expose the default webdriver port:
-EXPOSE 4444
