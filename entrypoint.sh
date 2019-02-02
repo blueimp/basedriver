@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ "$DISABLE_X11" = true ]; then
+  exec "$@"
+fi
+
 if [ "$ENABLE_VNC" = true ]; then
   set -- vnc-start "$@"
 fi
