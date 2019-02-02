@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$VNC_ENABLED" = true ]; then
+if [ "$ENABLE_VNC" = true ]; then
   set -- vnc-start "$@"
 fi
 
