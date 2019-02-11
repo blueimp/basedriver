@@ -41,6 +41,6 @@ COPY vnc-start.sh /usr/local/bin/vnc-start
 ENV SCREEN_WIDTH 1440
 ENV SCREEN_HEIGHT 900
 ENV SCREEN_DEPTH 24
-ENV DISPLAY :60
+ENV DISPLAY :0
 
 ENTRYPOINT ["entrypoint"]
