@@ -2,7 +2,7 @@
 # Base Webdriver Dockerfile
 #
 
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 # Install the base requirements to run and debug webdriver implementations:
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -14,7 +14,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     ca-certificates \
     x11vnc \
     fluxbox \
-    xvt \
+    rxvt-unicode \
     curl \
   # Remove obsolete files:
   && apt-get clean \
