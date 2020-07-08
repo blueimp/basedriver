@@ -15,11 +15,15 @@ The base image runs a given command in a virtual
 [X Window System](https://en.wikipedia.org/wiki/X_Window_System):
 
 ```sh
-docker run blueimp/basedriver COMMAND
+docker run --init blueimp/basedriver COMMAND
 ```
 
-As this is not every useful by itself, please refer to the following projects,
-which extend this image with Webdriver servers:
+The `--init` argument
+[specifies an init process](https://docs.docker.com/engine/reference/run/#specify-an-init-process),
+which is required for the proper operation of this Docker image.
+
+As the base image is not every useful by itself, please refer to the following
+projects, which extend the image with Webdriver servers:
 
 - [blueimp/chromedriver](https://github.com/blueimp/chromedriver) (Chrome
   Webdriver)
