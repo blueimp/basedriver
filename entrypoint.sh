@@ -20,4 +20,5 @@ SERVERNUM=$(echo "$DISPLAY" | sed 's/:\([0-9][0-9]*\).*/\1/')
 # −screen NUM WxHxD creates the screen and sets its width, height, and depth
 SERVERARGS="-ac -screen 0 ${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_DEPTH}"
 
-exec xvfb-run --server-num "$SERVERNUM" --server-args "$SERVERARGS" "$@"
+exec tini -g -- xvfb-run --server-num "$SERVERNUM" --server-args "$SERVERARGS" \
+  "$@"

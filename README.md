@@ -15,12 +15,8 @@ The base image runs a given command in a virtual
 [X Window System](https://en.wikipedia.org/wiki/X_Window_System):
 
 ```sh
-docker run --init blueimp/basedriver COMMAND
+docker run blueimp/basedriver COMMAND
 ```
-
-The `--init` argument
-[specifies an init process](https://docs.docker.com/engine/reference/run/#specify-an-init-process),
-which is required for the proper operation of this Docker image.
 
 As the base image is not every useful by itself, please refer to the following
 projects, which extend the image with Webdriver servers:
@@ -34,7 +30,7 @@ projects, which extend the image with Webdriver servers:
 
 The following software is included in the `blueimp/basedriver` image:
 
-- [Debian base image](https://hub.docker.com/_/debian) (buster-slim)
+- [Debian base image](https://hub.docker.com/_/debian) (bullseye-slim)
 - [Xvfb](https://en.wikipedia.org/wiki/Xvfb) as virtual display server
 - [Fluxbox](https://en.wikipedia.org/wiki/Fluxbox) as lightweight window manager
 - [rxvt-unicode](https://en.wikipedia.org/wiki/Rxvt) as lightweight terminal

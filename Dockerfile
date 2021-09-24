@@ -16,6 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     fluxbox \
     rxvt-unicode \
     curl \
+    tini \
   # Remove obsolete files:
   && apt-get clean \
   && rm -rf \
