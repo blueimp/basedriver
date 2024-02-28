@@ -2,7 +2,7 @@
 # Base Webdriver Dockerfile
 #
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 # Install the base requirements to run and debug webdriver implementations:
 RUN export DEBIAN_FRONTEND=noninteractive \
